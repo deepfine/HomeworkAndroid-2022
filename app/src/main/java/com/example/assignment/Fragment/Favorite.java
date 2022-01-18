@@ -6,7 +6,7 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,36 +20,35 @@ import com.example.assignment.adapter.FavoriteAdapter;
 import java.util.ArrayList;
 
 public class Favorite extends Fragment {
-
-    RecyclerView recyclerView2;
-    SharedPreferences preferences;
-    FavoriteAdapter adapter2;
+    TextView favoriteuserlist;
+    RecyclerView favoriterecyclerview;
+    String favoriteUsername;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.favorite, container, false);
-        recyclerView2 = v.findViewById(R.id.favoriterecyclerview);
-        setupRecyclerView();
+        favoriterecyclerview = v.findViewById(R.id.favoriterecyclerview);
+        favoriteuserlist = v.findViewById(R.id.favoriteuserlist);
 
-        preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String username = preferences.getString("username", "기본값");
-        String userid = preferences.getString("userid", "기본값");
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        favoriterecyclerview.setLayoutManager(layoutManager);
 
-        ArrayList<String> favoritelist = new ArrayList<>();
-        favoritelist.add(username);
-        favoritelist.add(userid);
+        //adapter를 디바이스 저장소에서 받아옴
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        favoriterecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        recyclerView2.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter2 = new FavoriteAdapter(favoritelist);
-        recyclerView2.setAdapter(adapter2);
+        ArrayList<String> userlist = new ArrayList<String>();
 
+
+        favoriteUsername = preferences.getString("favoriteUsername" , "기본값");
+        userlist.add(favoriteUsername);
+
+        favoriterecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+        FavoriteAdapter adapter = new FavoriteAdapter(userlist);
+        favoriterecyclerview.setAdapter(adapter);
 
         return v;
-    }
-
-    public void setupRecyclerView() {
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        recyclerView2.setLayoutManager(layoutManager);
     }
 }

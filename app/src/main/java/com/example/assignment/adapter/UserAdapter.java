@@ -1,6 +1,5 @@
 package com.example.assignment.adapter;
 
-import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +9,8 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.assignment.R;
-import com.example.assignment.retrofit2.RetroUser;
 import com.example.assignment.SecondActivity;
+import com.example.assignment.retrofit2.RetroUser;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
@@ -53,7 +52,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     @Override
     public void onBindViewHolder(UserViewHolder holder, int position) {
-        holder.txtTitle.setText(retroUser.getItems().get(position).login+"\n"+retroUser.getItems().get(position).id);
+        holder.txtTitle.setText(retroUser.getItems().get(position).login+"\n"+
+                retroUser.getItems().get(position).id);
     }
 
     // size of array

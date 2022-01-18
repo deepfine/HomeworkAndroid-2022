@@ -18,14 +18,18 @@ public class RetroUserId {
     public String getId() {
         return id;
     }
+
     public String getfollowers() {
         return login;
     }
+
     public String getfollowing() {
         return login;
     }
+
     public String getEmail() {
         return login;
     }
+
 
 }

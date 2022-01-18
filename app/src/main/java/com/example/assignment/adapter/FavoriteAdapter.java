@@ -1,5 +1,7 @@
 package com.example.assignment.adapter;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,41 +11,40 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.assignment.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder> {
-    private ArrayList localDataSet;
+
+    private List<String> mData;
+
+    public FavoriteAdapter(List<String> data) {
+        this.mData = data;
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtTitle2;
+        TextView favoriteuserlist;
 
         public ViewHolder(View view) {
             super(view);
-            txtTitle2 = view.findViewById(R.id.title2);
+            favoriteuserlist = itemView.findViewById(R.id.favoriteuserlist);
         }
-
-    }
-    public FavoriteAdapter(ArrayList dataSet) {
-        this.localDataSet = dataSet;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.favoritedetail, parent, false);
-
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.txtTitle2.setText(localDataSet.get(position).toString());
+        String animal = mData.get(position);
+        holder.favoriteuserlist.setText(animal);
     }
 
     @Override
     public int getItemCount() {
-        return localDataSet.size();
+        return mData.size();
     }
-
-
 }

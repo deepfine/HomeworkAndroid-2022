@@ -8,39 +8,39 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.assignment.adapter.FavoriteAdapter;
 import com.example.assignment.retrofit2.RetroUserId;
 import com.example.assignment.retrofit2.RetrofitDataService;
 import com.example.assignment.retrofit2.RetrofitInstance;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SecondActivity extends AppCompatActivity {
-
-    TextView textView;
+    TextView textView, favoriteuserlist;
     CheckBox btn_selector;
-    public SharedPreferences preferences;
     RetroUserId retroUserId;
     String username, userid;
+    RecyclerView recyclerView2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
         textView = findViewById(R.id.textView);
+        favoriteuserlist = findViewById(R.id.favoriteuserlist);
         btn_selector = findViewById(R.id.btn_selector);
-        preferences = getSharedPreferences("UserInfo", MODE_PRIVATE);
-        //모드 => MODE_PRIVATE (이 앱에서만 사용가능)
+        recyclerView2 = findViewById(R.id.favoriterecyclerview);
 
         String valuelogin = getIntent().getStringExtra("Login");
         RetrofitDataService service = RetrofitInstance.getRetrofitInstance().create(RetrofitDataService.class);
         Call<RetroUserId> call = service.getUserId(valuelogin);
-
 
         call.enqueue(new Callback<RetroUserId>() {
             @Override
@@ -58,13 +58,15 @@ public class SecondActivity extends AppCompatActivity {
         });
 
         btn_selector.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor = preferences.edit();
 
-                editor.putString("username", username);
-                editor.putString("userid", userid);
+                int num=0;
+
+                editor.putString("favoriteUsername" + num ++, username);
                 editor.apply();
 
             }
