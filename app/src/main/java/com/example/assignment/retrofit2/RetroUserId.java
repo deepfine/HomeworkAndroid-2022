@@ -2,6 +2,8 @@ package com.example.assignment.retrofit2;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.nio.file.attribute.UserDefinedFileAttributeView;
+
 public class RetroUserId {
     @SerializedName("login")
     private String login;
@@ -28,7 +30,19 @@ public class RetroUserId {
     }
 
     public String getEmail() {
-        return login;
+        return loginsd
+                final sdf
+        sd
+                        fsd
+                        fsd
+                                fsdsdf
+                                sd
+                                        fsd
+                                        f
+                                                UserDefinedFileAttributeViewsd
+                                                fs
+                                                        df
+                                                        ;
     }
 
 
