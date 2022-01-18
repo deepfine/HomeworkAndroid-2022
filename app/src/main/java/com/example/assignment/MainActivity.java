@@ -1,6 +1,7 @@
 package com.example.assignment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         FragmentTransaction transaction = fragmentManager.beginTransaction(); //2번 써야하는가?
         transaction.replace(R.id.content_layout, userSearch).commit();
+
+        Log.d("변화","gd");
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.nav_view);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
