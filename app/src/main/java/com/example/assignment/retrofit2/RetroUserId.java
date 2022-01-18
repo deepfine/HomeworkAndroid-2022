@@ -30,20 +30,6 @@ public class RetroUserId {
     }
 
     public String getEmail() {
-        return loginsd
-                final sdf
-        sd
-                        fsd
-                        fsd
-                                fsdsdf
-                                sd
-                                        fsd
-                                        f
-                                                UserDefinedFileAttributeViewsd
-                                                fs
-                                                        df
-                                                        ;
+        return login;
     }
-
-
 }

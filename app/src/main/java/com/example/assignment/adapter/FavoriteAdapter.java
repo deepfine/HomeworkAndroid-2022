@@ -10,14 +10,15 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.assignment.R;
+import com.example.assignment.retrofit2.Item;
 
 import java.util.List;
 
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder> {
 
-    private List<String> mData;
+    private List<Item> mData;
 
-    public FavoriteAdapter(List<String> data) {
+    public FavoriteAdapter(List<Item> data) {
         this.mData = data;
     }
 
@@ -39,8 +40,8 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String animal = mData.get(position);
-        holder.favoriteuserlist.setText(animal);
+        String favoriteUser = mData.get(position).login;
+        holder.favoriteuserlist.setText(favoriteUser);
     }
 
     @Override

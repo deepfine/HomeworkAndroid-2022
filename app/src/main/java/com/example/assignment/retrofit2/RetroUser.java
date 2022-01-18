@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class RetroUser {
+public class RetroUser{
     @Expose
     @SerializedName("items")
     List<Item> items;
@@ -14,19 +14,7 @@ public class RetroUser {
         return items;
     }
 
-    public class Item{
-        @SerializedName("login")
-        public String login;
-
-        @SerializedName("id")
-        public int id;
-
-        public String getLogin(){
-            return login;
-        }
-
-        public int getId(){
-            return id;
-        }
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 }
