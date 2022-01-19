@@ -1,10 +1,13 @@
 package com.example.assignment.adapter;
 
+import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,15 +30,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             super(itemView);
             txtTitle = itemView.findViewById(R.id.title);
 
-            itemView.setOnClickListener(new View.OnClickListener()
-            {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v)
-                {
-                    Intent intent=new Intent(v.getContext(), SecondActivity.class);
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), SecondActivity.class);
                     int pos = getAdapterPosition();
-                    intent.putExtra("Login",retroUser.getItems().get(pos).login);
-                    intent.putExtra("Id",retroUser.getItems().get(pos).id);
+                    intent.putExtra("Login", retroUser.getItems().get(pos).login);
+                    intent.putExtra("Id", retroUser.getItems().get(pos).id);
                     v.getContext().startActivity(intent);
                 }
             });
@@ -52,7 +53,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     @Override
     public void onBindViewHolder(UserViewHolder holder, int position) {
-        holder.txtTitle.setText(retroUser.getItems().get(position).login+"\n"+
+//        if (retroUser.getItems().get(position).login.equals(null)) {
+//            Log.d("yjc", "11 : 검색결과를 입력해주세요.");
+//        } else
+        holder.txtTitle.setText(retroUser.getItems().get(position).login + "\n" +
                 retroUser.getItems().get(position).id);
     }
 

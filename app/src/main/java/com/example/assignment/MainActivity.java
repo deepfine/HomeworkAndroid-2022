@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FragmentTransaction transaction = fragmentManager.beginTransaction(); //2번 써야하는가?
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.content_layout, userSearch).commit();
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.nav_view);
