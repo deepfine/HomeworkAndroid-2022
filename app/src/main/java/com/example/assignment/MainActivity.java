@@ -1,11 +1,9 @@
 package com.example.assignment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -35,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
 
+                //Fragment 구현
                 switch (item.getItemId()) {
                     case R.id.navigation_1:
                         transaction.replace(R.id.content_layout, userSearch).commit();

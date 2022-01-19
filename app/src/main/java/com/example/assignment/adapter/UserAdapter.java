@@ -1,6 +1,5 @@
 package com.example.assignment.adapter;
 
-import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,9 +39,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                     Intent intent = new Intent(v.getContext(), SecondActivity.class);
                     int pos = getAdapterPosition();
 
+                    //Intent로 Layout이동 시 값을 전달함
                     intent.putExtra("Login", retroUser.getItems().get(pos).login);
                     intent.putExtra("Id", retroUser.getItems().get(pos).id);
-//                    intent.putExtra("avatar_url", retroUser.getItems().get(pos).avatar_url);
                     v.getContext().startActivity(intent);
                 }
             });

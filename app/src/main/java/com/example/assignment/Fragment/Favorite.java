@@ -34,8 +34,9 @@ public class Favorite extends Fragment {
         favoriteuserlist = v.findViewById(R.id.favoriteuserlist);
         favoriterecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
-        Type type = new TypeToken<List<Item>>() {}.getType();
+        //즐겨찾기 목록 구현
+        Type type = new TypeToken<List<Item>>() {
+        }.getType();
         String favoriteJSON = getFavoriteJSON();
 
         if (!favoriteJSON.equals("")) {

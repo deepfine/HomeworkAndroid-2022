@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+//연결한 깃허브의 body 정보
 public class Item {
     @SerializedName("login")
     public String login;
@@ -12,7 +13,7 @@ public class Item {
     @SerializedName("id")
     public int id;
 
-    public String getLogin(){
+    public String getLogin() {
         return login;
     }
 

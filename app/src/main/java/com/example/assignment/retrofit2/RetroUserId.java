@@ -2,8 +2,7 @@ package com.example.assignment.retrofit2;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.nio.file.attribute.UserDefinedFileAttributeView;
-
+//Retrofit을 userid로 연결할 경우 body
 public class RetroUserId {
     @SerializedName("login")
     private String login;
@@ -19,17 +18,5 @@ public class RetroUserId {
 
     public String getId() {
         return id;
-    }
-
-    public String getfollowers() {
-        return login;
-    }
-
-    public String getfollowing() {
-        return login;
-    }
-
-    public String getEmail() {
-        return login;
     }
 }

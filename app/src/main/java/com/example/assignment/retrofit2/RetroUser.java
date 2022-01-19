@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+
+//Json Array > items 오브젝트
 public class RetroUser {
     @Expose
     @SerializedName("items")
@@ -12,9 +14,5 @@ public class RetroUser {
 
     public List<Item> getItems() {
         return items;
-    }
-
-    public void setItems(List<Item> items) {
-        this.items = items;
     }
 }

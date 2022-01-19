@@ -29,6 +29,8 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:scaleType="centerCrop"
-            android:id="@+id/userImage" />
+            android:id="@+id/userImage"
+            android:src="@mipmap/ic_launcher"
+            />
 
 </LinearLayout>

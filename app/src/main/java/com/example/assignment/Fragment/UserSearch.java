@@ -1,7 +1,6 @@
 package com.example.assignment.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,16 +50,19 @@ public class UserSearch extends Fragment {
         return view;
     }
 
+    //recyclerview로 유저목록 List 구현
     public void setupRecyclerView() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
     }
 
+    //user 데이터가 있는경우
     private void onSucceed(RetroUser response) {
         adapter = new UserAdapter(response);
         recyclerView.setAdapter(adapter);
     }
 
+    //retrofit2로 github에 연결
     private void CallRetofit() {
         RetrofitDataService service = RetrofitInstance.getRetrofitInstance().create(RetrofitDataService.class);
         Call<RetroUser> call = service.getUser(search_id.getText().toString());
@@ -69,7 +71,7 @@ public class UserSearch extends Fragment {
             public void onResponse(Call<RetroUser> call, Response<RetroUser> response) {
                 RetroUser userList = response.body();
                 if (userList == null)
-                    Toast.makeText(getContext(), "검색어를 입력해주세요.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "검색어를 입력해주세요.", Toast.LENGTH_SHORT).show();
                 else
                     onSucceed(userList);
             }

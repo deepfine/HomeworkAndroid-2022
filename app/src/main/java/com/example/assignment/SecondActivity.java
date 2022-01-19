@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.assignment.preference.PreferenceManager;
 import com.example.assignment.retrofit2.Item;
 import com.example.assignment.retrofit2.RetroUserId;
 import com.example.assignment.retrofit2.RetrofitDataService;
@@ -96,7 +95,7 @@ public class SecondActivity extends AppCompatActivity {
                     //이미 즐겨찾기 목록에 있는 경우, 즐겨찾기 버튼 '비활성화'로 변경 시 List에서 제거
                     btn_selector.setChecked(false);
                     if (searchThisUser()) {
-                        for (int i=0; i<items.size(); i++) {
+                        for (int i = 0; i < items.size(); i++) {
                             if (username.equals(items.get(i).login)) {
                                 items.remove(i);
                             }
@@ -134,9 +133,10 @@ public class SecondActivity extends AppCompatActivity {
         if (originalFavoriteJSON.equals(""))
             return false;
 
-        Type type = new TypeToken<List<Item>>() {}.getType();
+        Type type = new TypeToken<List<Item>>() {
+        }.getType();
         List<Item> items = gson.fromJson(originalFavoriteJSON, type);
-        for (int i=0; i<items.size(); i++) {
+        for (int i = 0; i < items.size(); i++) {
             if (username.equals(items.get(i).login)) {
                 isExist = true;
             }
