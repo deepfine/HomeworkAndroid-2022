@@ -5,12 +5,12 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class RetroUser{
+public class RetroUser {
     @Expose
     @SerializedName("items")
     List<Item> items;
 
-    public List<Item> getItems(){
+    public List<Item> getItems() {
         return items;
     }
 

@@ -1,29 +1,22 @@
 package com.example.assignment;
 
-import android.content.SharedPreferences;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.assignment.preference.PreferenceManager;
 import com.example.assignment.retrofit2.Item;
-import com.example.assignment.retrofit2.RetroUser;
 import com.example.assignment.retrofit2.RetroUserId;
 import com.example.assignment.retrofit2.RetrofitDataService;
 import com.example.assignment.retrofit2.RetrofitInstance;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -37,13 +30,11 @@ public class SecondActivity extends AppCompatActivity {
     TextView textView, favoriteuserlist;
     CheckBox btn_selector;
     RetroUserId retroUserId;
-    String username, userid, contact_user;
+    String username, userid;
     RecyclerView recyclerView2;
     Gson gson;
-    ArrayList<String> users;
 
-
-    @Override
+    @SuppressLint("ResourceType")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
@@ -52,9 +43,9 @@ public class SecondActivity extends AppCompatActivity {
         btn_selector = findViewById(R.id.btn_selector);
         recyclerView2 = findViewById(R.id.favoriterecyclerview);
 
-        String valuelogin = getIntent().getStringExtra("Login");
+        String getuser = getIntent().getStringExtra("Login");
         RetrofitDataService service = RetrofitInstance.getRetrofitInstance().create(RetrofitDataService.class);
-        Call<RetroUserId> call = service.getUserId(valuelogin);
+        Call<RetroUserId> call = service.getUserId(getuser);
         gson = new GsonBuilder().create();
 
         call.enqueue(new Callback<RetroUserId>() {
@@ -78,50 +69,41 @@ public class SecondActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 String originalFavoriteJSON = getFavoriteJSON();
 
-                if (originalFavoriteJSON.equals("")) {
-                    Item item = new Item();
-                    item.setId(Integer.parseInt(userid));
-                    item.setLogin(username);
+                if (!btn_selector.isChecked() == false) {
+                    btn_selector.setChecked(true);
 
-                    List<Item> items = new ArrayList<>();
-                    items.add(item);
-                    String favoriteJSON = gson.toJson(items);
-                    com.example.assignment.preference.PreferenceManager.setString(
-                            getApplicationContext(),
-                            "favoriteJSON",
-                            favoriteJSON
-                    );
+                    if (originalFavoriteJSON.equals("")) {
+                        Item item = new Item();
+                        item.setId(Integer.parseInt(userid));
+                        item.setLogin(username);
 
+                        List<Item> items = new ArrayList<>();
+                        items.add(item);
+                        String favoriteJSON = gson.toJson(items);
+                        com.example.assignment.preference.PreferenceManager.setString(
+                                getApplicationContext(),
+                                "favoriteJSON",
+                                favoriteJSON
+                        );
+
+                    } else {
+                        Item item = new Item();
+                        item.setId(Integer.parseInt(userid));
+                        item.setLogin(username);
+
+                        Type type = new TypeToken<List<Item>>() {
+                        }.getType();
+                        List<Item> items = gson.fromJson(originalFavoriteJSON, type);
+                        items.add(item);
+                        String newFavoriteJSON = gson.toJson(items);
+                        com.example.assignment.preference.PreferenceManager.setString(
+                                getApplicationContext(),
+                                "favoriteJSON",
+                                newFavoriteJSON
+                        );
+                    }
                 } else {
-//                    try {
-//                        JSONArray jsonArray = new JSONArray(originalFavoriteJSON);
-//                        List<Item> items = new ArrayList<>();
-//                        items = gson.fromJson(originalFavoriteJSON, Item.class);
-//
-                    Item item = new Item();
-                    item.setId(Integer.parseInt(userid));
-                    item.setLogin(username);
-//
-//                        JSONObject jsonObject = new JSONObject();
-//                        jsonObject.put("id", Integer.parseInt(userid));
-//                        jsonObject.put("login", username);
-//                        jsonArray.put(jsonObject);
-//
-//                        Log.d("yjc", "22: " +gson.toJson(jsonArray));
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-                    Type type = new TypeToken<List<Item>>() {
-                    }.getType();
-                    List<Item> items = gson.fromJson(originalFavoriteJSON, type);
-                    items.add(item);
-
-                    String newFavoriteJSON = gson.toJson(items);
-                    com.example.assignment.preference.PreferenceManager.setString(
-                            getApplicationContext(),
-                            "favoriteJSON",
-                            newFavoriteJSON
-                    );
+                    btn_selector.setChecked(false);
                 }
             }
         });
@@ -131,4 +113,15 @@ public class SecondActivity extends AppCompatActivity {
         String favoriteJSON = com.example.assignment.preference.PreferenceManager.getString(this.getApplicationContext(), "favoriteJSON");
         return favoriteJSON;
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+//
+//    public void setCheckedBoolean() {
+//        com.example.assignment.preference.PreferenceManager.getBoolean(
+//                SecondActivity.this, "boolean" + username);
+//    }
 }

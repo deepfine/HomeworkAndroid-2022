@@ -48,4 +48,5 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
     public int getItemCount() {
         return mData.size();
     }
+
 }

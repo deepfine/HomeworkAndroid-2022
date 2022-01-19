@@ -53,9 +53,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     @Override
     public void onBindViewHolder(UserViewHolder holder, int position) {
-//        if (retroUser.getItems().get(position).login.equals(null)) {
-//            Log.d("yjc", "11 : 검색결과를 입력해주세요.");
-//        } else
         holder.txtTitle.setText(retroUser.getItems().get(position).login + "\n" +
                 retroUser.getItems().get(position).id);
     }

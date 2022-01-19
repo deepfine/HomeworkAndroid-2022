@@ -44,55 +44,8 @@ public class UserSearch extends Fragment {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RetrofitDataService service = RetrofitInstance.getRetrofitInstance().create(RetrofitDataService.class);
 
-
-                if(!search_id.getText().toString().equals(null)) {
-//                    Call<RetroUser> call = service.getUser(search_id.getText().toString());
-                    Call<RetroUser> call = null;
-                    call.enqueue(new Callback<RetroUser>() {
-
-                        @Override
-                        public void onResponse(Call<RetroUser> call, Response<RetroUser> response) {
-                            Toast.makeText(getContext(), "통신성공", Toast.LENGTH_SHORT).show();
-                            RetroUser userList = response.body();
-                            onSucceed(userList);
-                        }
-
-                        @Override
-                        public void onFailure(Call<RetroUser> call, Throwable t) {
-                            Toast.makeText(getContext(), "통신실패", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    recyclerView.setVisibility(View.VISIBLE);
-                }
-                else
-                    Toast.makeText(getContext(),"11 : 검색결과를 입력해주세요.", Toast.LENGTH_SHORT).show();
-
-
-
-
-//                if(!search_id.getText().toString().equals(null)) {
-////                    Call<RetroUser> call = service.getUser(search_id.getText().toString());
-//                    Call<RetroUser> call = null;
-//                    call.enqueue(new Callback<RetroUser>() {
-//
-//                        @Override
-//                        public void onResponse(Call<RetroUser> call, Response<RetroUser> response) {
-//                            Toast.makeText(getContext(), "통신성공", Toast.LENGTH_SHORT).show();
-//                            RetroUser userList = response.body();
-//                            onSucceed(userList);
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<RetroUser> call, Throwable t) {
-//                            Toast.makeText(getContext(), "통신실패", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//                    recyclerView.setVisibility(View.VISIBLE);
-//                }
-//                else
-//                    Toast.makeText(getContext(),"11 : 검색결과를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                CallRetofit();
             }
         });
         return view;
@@ -107,4 +60,26 @@ public class UserSearch extends Fragment {
         adapter = new UserAdapter(response);
         recyclerView.setAdapter(adapter);
     }
+
+    private void CallRetofit() {
+        RetrofitDataService service = RetrofitInstance.getRetrofitInstance().create(RetrofitDataService.class);
+        Call<RetroUser> call = service.getUser(search_id.getText().toString());
+        call.enqueue(new Callback<RetroUser>() {
+            @Override
+            public void onResponse(Call<RetroUser> call, Response<RetroUser> response) {
+                RetroUser userList = response.body();
+                if (userList == null)
+                    Toast.makeText(getContext(), "검색어를 입력해주세요.",Toast.LENGTH_SHORT).show();
+                else
+                    onSucceed(userList);
+            }
+
+            @Override
+            public void onFailure(Call<RetroUser> call, Throwable t) {
+                Toast.makeText(getContext(), "통신실패", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
 }

@@ -40,7 +40,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/customRecyclerView"
-        android:visibility="invisible"
         android:background="#F0F0F0"/>
 
 </LinearLayout>
