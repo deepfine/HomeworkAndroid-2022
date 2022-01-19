@@ -24,8 +24,6 @@ import java.util.List;
 public class Favorite extends Fragment {
     TextView favoriteuserlist;
     RecyclerView favoriterecyclerview;
-    String favoriteUsername;
-    String contact_person;
     Gson gson = new Gson();
 
     @Nullable
@@ -35,6 +33,7 @@ public class Favorite extends Fragment {
         favoriterecyclerview = v.findViewById(R.id.favoriterecyclerview);
         favoriteuserlist = v.findViewById(R.id.favoriteuserlist);
         favoriterecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+
 
         Type type = new TypeToken<List<Item>>() {}.getType();
         List<Item> items = gson.fromJson(getFavoriteJSON(), type);
@@ -52,13 +51,4 @@ public class Favorite extends Fragment {
         }
         return userId;
     }
-
-//    private ArrayList<String> ReadFriendsData() {
-//        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getContext());
-//        Gson gson = new Gson();
-//        String json = pref.getString("MyFriends", "EMPTY");
-//        Type type = new TypeToken<ArrayList<String>>(){}.getType();
-//        ArrayList<String> arrayList = gson.fromJson(json, type);
-//        return arrayList;
-//    }
 }

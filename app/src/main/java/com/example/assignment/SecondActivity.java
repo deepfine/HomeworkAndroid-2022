@@ -55,6 +55,8 @@ public class SecondActivity extends AppCompatActivity {
                 username = response.body().getLogin();
                 userid = response.body().getId();
                 textView.setText("username은 " + response.body().getLogin() + ", userid는 " + response.body().getId());
+
+                btn_selector.setChecked(searchThisUser());
             }
 
             @Override
@@ -69,49 +71,75 @@ public class SecondActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 String originalFavoriteJSON = getFavoriteJSON();
 
-                if (!btn_selector.isChecked() == false) {
+                Item item = new Item();
+                item.setId(Integer.parseInt(userid));
+                item.setLogin(username);
+                List<Item> items = new ArrayList<>();
+
+                //즐겨찾기 버튼 활성화/비활성화 확인
+                if (btn_selector.isChecked()) {
                     btn_selector.setChecked(true);
 
-                    if (originalFavoriteJSON.equals("")) {
-                        Item item = new Item();
-                        item.setId(Integer.parseInt(userid));
-                        item.setLogin(username);
-
-                        List<Item> items = new ArrayList<>();
-                        items.add(item);
-                        String favoriteJSON = gson.toJson(items);
-                        com.example.assignment.preference.PreferenceManager.setString(
-                                getApplicationContext(),
-                                "favoriteJSON",
-                                favoriteJSON
-                        );
-
-                    } else {
-                        Item item = new Item();
-                        item.setId(Integer.parseInt(userid));
-                        item.setLogin(username);
-
-                        Type type = new TypeToken<List<Item>>() {
+                    //JSON배열에 데이터가 있는 경우
+                    if (!originalFavoriteJSON.equals("")) {
+                        Type type = new TypeToken<List<Item>>() { //Json String을 List<Item> 객체로 convert
                         }.getType();
-                        List<Item> items = gson.fromJson(originalFavoriteJSON, type);
-                        items.add(item);
-                        String newFavoriteJSON = gson.toJson(items);
-                        com.example.assignment.preference.PreferenceManager.setString(
-                                getApplicationContext(),
-                                "favoriteJSON",
-                                newFavoriteJSON
-                        );
+                        items = gson.fromJson(originalFavoriteJSON, type); //List<Item>에 담음
                     }
+
+                    items.add(item);
                 } else {
+                    Type type = new TypeToken<List<Item>>() {
+                    }.getType();
+                    items = gson.fromJson(originalFavoriteJSON, type);
+
+                    //이미 즐겨찾기 목록에 있는 경우, 즐겨찾기 버튼 '비활성화'로 변경 시 List에서 제거
                     btn_selector.setChecked(false);
+                    if (searchThisUser()) {
+                        for (int i=0; i<items.size(); i++) {
+                            if (username.equals(items.get(i).login)) {
+                                items.remove(i);
+                            }
+                        }
+                    }
                 }
+
+                String favoriteJSON = gson.toJson(items);
+                saveFavorite(favoriteJSON);
             }
         });
     }
 
+    ////sharedpreference로 Get
     private String getFavoriteJSON() {
         String favoriteJSON = com.example.assignment.preference.PreferenceManager.getString(this.getApplicationContext(), "favoriteJSON");
         return favoriteJSON;
+    }
+
+
+    //sharedpreference로 저장
+    private void saveFavorite(String favoriteJSON) {
+        com.example.assignment.preference.PreferenceManager.setString(
+                getApplicationContext(),
+                "favoriteJSON",
+                favoriteJSON
+        );
+    }
+
+    //즐겨찾기 활성화/비활성화 return
+    private boolean searchThisUser() {
+        //로그인 아이디가 sharedprference에 있으면 true, 없으면 false
+        boolean isExist = false;
+        String originalFavoriteJSON = getFavoriteJSON();
+        Type type = new TypeToken<List<Item>>() {}.getType();
+        List<Item> items = gson.fromJson(originalFavoriteJSON, type);
+        for (int i=0; i<items.size(); i++) {
+            if (username.equals(items.get(i).login)) {
+                isExist = true;
+            }
+        }
+
+        return isExist;
     }
 
     @Override
@@ -119,9 +147,4 @@ public class SecondActivity extends AppCompatActivity {
         super.onBackPressed();
         finish();
     }
-//
-//    public void setCheckedBoolean() {
-//        com.example.assignment.preference.PreferenceManager.getBoolean(
-//                SecondActivity.this, "boolean" + username);
-//    }
 }
