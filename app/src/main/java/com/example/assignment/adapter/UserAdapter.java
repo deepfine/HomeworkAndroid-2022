@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +19,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     private RetroUser retroUser;
     CheckBox btn_selector;
+    ImageView userImage;
 
     public UserAdapter(RetroUser dataList) {
         this.retroUser = dataList;
@@ -30,6 +32,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             super(itemView);
             txtTitle = itemView.findViewById(R.id.title);
             btn_selector = itemView.findViewById(R.id.btn_selector);
+            userImage = itemView.findViewById(R.id.userImage);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -39,6 +42,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
                     intent.putExtra("Login", retroUser.getItems().get(pos).login);
                     intent.putExtra("Id", retroUser.getItems().get(pos).id);
+//                    intent.putExtra("avatar_url", retroUser.getItems().get(pos).avatar_url);
                     v.getContext().startActivity(intent);
                 }
             });

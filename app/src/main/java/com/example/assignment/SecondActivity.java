@@ -131,6 +131,9 @@ public class SecondActivity extends AppCompatActivity {
         //로그인 아이디가 sharedprference에 있으면 true, 없으면 false
         boolean isExist = false;
         String originalFavoriteJSON = getFavoriteJSON();
+        if (originalFavoriteJSON.equals(""))
+            return false;
+
         Type type = new TypeToken<List<Item>>() {}.getType();
         List<Item> items = gson.fromJson(originalFavoriteJSON, type);
         for (int i=0; i<items.size(); i++) {

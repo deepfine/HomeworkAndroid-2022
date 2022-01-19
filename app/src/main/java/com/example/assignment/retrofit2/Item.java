@@ -1,5 +1,8 @@
 package com.example.assignment.retrofit2;
 
+import android.graphics.Bitmap;
+
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Item {
@@ -13,7 +16,7 @@ public class Item {
         return login;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 

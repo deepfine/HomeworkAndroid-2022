@@ -36,19 +36,19 @@ public class Favorite extends Fragment {
 
 
         Type type = new TypeToken<List<Item>>() {}.getType();
-        List<Item> items = gson.fromJson(getFavoriteJSON(), type);
+        String favoriteJSON = getFavoriteJSON();
 
-        FavoriteAdapter adapter = new FavoriteAdapter(items);
-        favoriterecyclerview.setAdapter(adapter);
+        if (!favoriteJSON.equals("")) {
+            List<Item> items = gson.fromJson(favoriteJSON, type);
+            FavoriteAdapter adapter = new FavoriteAdapter(items);
+            favoriterecyclerview.setAdapter(adapter);
+        }
 
         return v;
     }
 
     private String getFavoriteJSON() {
         String userId = com.example.assignment.preference.PreferenceManager.getString(getContext(), "favoriteJSON");
-        if (userId.equals("")) {
-            userId = "저장된 데이터가 없습니다.";
-        }
         return userId;
     }
 }
